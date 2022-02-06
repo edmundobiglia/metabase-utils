@@ -5,6 +5,8 @@ function jsonPopup() {
         if (e.target.closest(".TableInteractive-cellWrapper")) {
             const cellText = e.target.closest(".TableInteractive-cellWrapper").firstChild.innerText
 
+            copyToClipboard(cellText)
+
             if (cellText.charAt(0) === "{") {
                 const cellTextJson = JSON.parse(cellText);
                 const strCellText = JSON.stringify(cellTextJson, undefined, 2);
@@ -54,6 +56,17 @@ function syntaxHighlight(json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
+
+function copyToClipboard(valueToCopy) {
+    const input = document.createElement('input');
+    input.style.position = 'fixed';
+    input.style.opacity = 0;
+    input.value = valueToCopy;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+};
 
 function tryToAddJsonViewer() {
     if (document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]) {
