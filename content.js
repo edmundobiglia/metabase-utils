@@ -120,8 +120,8 @@ function copyIcon() {
 }
 
 function setColumnResizeClass() {
-	chrome.storage.local.get(['columnResizeToggle'], function (result) {
-		if (result.columnResizeToggle !== 'false') {
+	chrome.storage.local.get({ shouldResizeColumn: "true" }, function (result) {
+		if (result.shouldResizeColumn !== 'false') {
 			document.body.classList.add("resize-column")
 		} else {
 			document.body.classList.remove("resize-column")
@@ -136,12 +136,13 @@ function addColumnResizeToggle() {
 	document.body.appendChild(toggle);
 
 	toggle.addEventListener("click", () => {
-		chrome.storage.local.get(['columnResizeToggle'], function (result) {
-			if (result.columnResizeToggle !== 'false') {
-				chrome.storage.local.set({ columnResizeToggle: "false" }, function () { });
+		chrome.storage.local.get({ shouldResizeColumn: "true" }, function (result) {
+			if (result.shouldResizeColumn !== 'false') {
+				chrome.storage.local.set({ shouldResizeColumn: "false" }, function () { });
+
 				window.location.reload();
 			} else {
-				chrome.storage.local.set({ columnResizeToggle: "true" }, function () { });
+				chrome.storage.local.set({ shouldResizeColumn: "true" }, function () { });
 				window.location.reload();
 			}
 		})
