@@ -7,13 +7,23 @@
     cursor: pointer;
 }
 
-.resize-icon {
+.resize-icon, .copy-icon {
     fill: #949aab !important;
     transition: fill 100ms ease-in-out;
 }
 
-.resize-icon:hover {
+.resize-icon:hover, .copy-icon:hover {
     fill: #509ee3 !important;
+}
+
+.copy-button {
+    width: 100%;
+    position: sticky;
+    top: 10px;
+    right: 20px;
+    z-index: 100000 !important;
+    cursor: pointer;
+    text-align: right;
 }
 
 body .ReactVirtualized__Grid:first-of-type .TableInteractive-cellWrapper {
@@ -68,6 +78,7 @@ body.shrink-cells .TableInteractive-cellWrapper {
 
 .cell-viewer-box pre {
     white-space: pre-wrap;
+    margin-top: -20px;
 }
 
 .string {
