@@ -1,0 +1,17 @@
+{
+    "name": "Metabase Utils",
+    "version": "1.0.0",
+    "description": "Metabase Utils",
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+    "content_scripts": [{
+        "matches": ["https://*.metabase.stone.credit/*"],
+        "js": ["content.js"],
+        "css": ["content.css"],
+        "run_at": "document_end"
+    }],
+    "permissions": ["activeTab", "https://*.metabase.stone.credit/*", "tabs", "webRequest"]
+}

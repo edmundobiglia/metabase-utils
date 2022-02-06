@@ -1,0 +1,23 @@
+{
+  "name": "chrome-extension-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edmundobiglia/chrome-extension-course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edmundobiglia/chrome-extension-course/issues"
+  },
+  "homepage": "https://github.com/edmundobiglia/chrome-extension-course#readme",
+  "dependencies": {
+    "@types/chrome": "0.0.144",
+    "types": "^0.1.1"
+  }
+}
