@@ -70,14 +70,12 @@ body.resize-column .TableInteractive-cellWrapper {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    white-space: pre-wrap;
     width: 90%;
     z-index: 1000;
 }
 
 .cell-viewer-box pre {
     margin-top: -20px;
-    white-space: pre-wrap;
 }
 
 .string {
