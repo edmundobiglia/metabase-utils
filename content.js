@@ -27,8 +27,6 @@ function cellViewer() {
             if (cellText.startsWith('{') || isContentHidden(cell)) {
                 outputCellViewerContent(cellText);
             }
-
-            copyToClipboard(cellText)
         }
     })
 }
@@ -45,6 +43,10 @@ function outputCellViewerContent(cellText) {
     copyButton.classList.add("copy-button");
     copyButton.innerHTML = copyIcon()
     cellViewer.appendChild(copyButton)
+
+    copyButton.addEventListener("click", () => {
+        copyToClipboard(cellText)
+    })
 
     if (cellText.startsWith('{"{')) {
         const fixedInvalidJson = cellText.substring(1, cellText.length - 1)
