@@ -20,7 +20,7 @@
     cursor: pointer !important;
 }
 
-.json-viewer-container {
+.cell-viewer-container {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -30,7 +30,7 @@
     background-color: rgba(76, 87, 115, 0.15);
 }
 
-.json-viewer-box {
+.cell-viewer-box {
     background-color: #f9fbfc;
     border-radius: 2px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 12px 0px;
@@ -51,7 +51,7 @@
     white-space: pre-wrap;
 }
 
-.json-viewer-box pre {
+.cell-viewer-box pre {
     white-space: pre-wrap;
 }
 
@@ -73,8 +73,4 @@
 
 .key {
     color: #7c52a1;
-}
-
-.json-pointer {
-    cursor: pointer !important;
 }

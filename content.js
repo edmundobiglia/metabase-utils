@@ -1,14 +1,13 @@
-function jsonPopup() {
+function cellViewer() {
     const tablePanel = document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]
 
     tablePanel.addEventListener("click", (e) => {
         if (e.target.closest(".TableInteractive-cellWrapper")) {
             const cell = e.target.closest(".TableInteractive-cellWrapper").firstChild
-            const shouldDisplayInViewer = isEllipsisActive(cell)
             const cellText = e.target.closest(".TableInteractive-cellWrapper").firstChild.innerText
 
-            if (cellText.startsWith('{') || shouldDisplayInViewer) {
-                outputJson(cellText);
+            if (cellText.startsWith('{') || isContentHidden(cell)) {
+                outputCellViewerContent(cellText);
             }
 
             copyToClipboard(cellText)
@@ -16,42 +15,42 @@ function jsonPopup() {
     })
 }
 
-function isEllipsisActive(cell) {
+function isContentHidden(cell) {
     return (cell.offsetWidth < cell.scrollWidth);
 }
 
-function outputJson(cellText) {
-    const jsonViewer = document.createElement('div');
-    jsonViewer.classList.add("json-viewer-box");
+function outputCellViewerContent(cellText) {
+    const cellViewer = document.createElement('div');
+    cellViewer.classList.add("cell-viewer-box");
 
     if (cellText.startsWith('{"{')) {
         const fixedInvalidJson = cellText.substring(1, cellText.length - 1)
         const cellTextJson = JSON.parse(JSON.parse(fixedInvalidJson));
-        const strCellText = JSON.stringify(cellTextJson, undefined, 2);
-        const formattedJson = syntaxHighlight(strCellText)
+        const stringCellText = JSON.stringify(cellTextJson, undefined, 2);
+        const formattedJson = syntaxHighlight(stringCellText)
 
-        jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+        cellViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
     } else if (cellText.charAt(0) === "{") {
         const cellTextJson = JSON.parse(cellText);
-        const strCellText = JSON.stringify(cellTextJson, undefined, 2);
-        const formattedJson = syntaxHighlight(strCellText)
+        const stringCellText = JSON.stringify(cellTextJson, undefined, 2);
+        const formattedJson = syntaxHighlight(stringCellText)
 
-        jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+        cellViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
     } else {
-        jsonViewer.innerText = cellText
+        cellViewer.innerText = cellText
     }
 
-    const jsonViewerContainer = document.createElement('div');
-    jsonViewerContainer.classList.add("json-viewer-container");
-    jsonViewerContainer.appendChild(jsonViewer)
+    const cellViewerContainer = document.createElement('div');
+    cellViewerContainer.classList.add("cell-viewer-container");
+    cellViewerContainer.appendChild(cellViewer)
 
-    jsonViewerContainer.addEventListener("mousedown", (e) => {
-        if (e.target === jsonViewerContainer) {
-            document.body.removeChild(jsonViewerContainer)
+    cellViewerContainer.addEventListener("mousedown", (e) => {
+        if (e.target === cellViewerContainer) {
+            document.body.removeChild(cellViewerContainer)
         }
     })
 
-    document.body.appendChild(jsonViewerContainer)
+    document.body.appendChild(cellViewerContainer)
 }
 
 function syntaxHighlight(json) {
@@ -87,13 +86,13 @@ function copyToClipboard(valueToCopy) {
     document.body.removeChild(input);
 };
 
-function tryToAddJsonViewer() {
+function tryToAddCellViewer() {
     if (document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]) {
-        jsonPopup();
+        cellViewer();
         console.log("Metabase Utils extension JSON Viewer enabled.")
     } else {
         setTimeout(() => {
-            tryToAddJsonViewer()
+            tryToAddCellViewer()
             console.log("No query detected. Trying to enable JSON Viewer again...")
         }, 1500);
     }
@@ -101,5 +100,5 @@ function tryToAddJsonViewer() {
 
 window.onload = () => {
     console.log("Metabase Utils extension loaded.");
-    tryToAddJsonViewer()
+    tryToAddCellViewer()
 };
