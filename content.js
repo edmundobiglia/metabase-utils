@@ -4,29 +4,36 @@ function jsonPopup() {
     tablePanel.addEventListener("click", (e) => {
         if (e.target.closest(".TableInteractive-cellWrapper")) {
             const cellText = e.target.closest(".TableInteractive-cellWrapper").firstChild.innerText
-
             copyToClipboard(cellText)
-
-            if (cellText.charAt(0) === "{") {
-                const cellTextJson = JSON.parse(cellText);
-                const strCellText = JSON.stringify(cellTextJson, undefined, 2);
-                const formattedJson = syntaxHighlight(strCellText)
-                outputJson(formattedJson);
-            }
+            outputJson(cellText);
         }
     })
 }
 
-function outputJson(inp) {
+function outputJson(cellText) {
     const jsonViewer = document.createElement('div');
     jsonViewer.classList.add("json-viewer-box");
-    jsonViewer.appendChild(document.createElement('pre')).innerHTML = inp
+
+    if (cellText.startsWith('{"{')) {
+        const fixedInvalidJson = cellText.substring(1, cellText.length - 1)
+        const cellTextJson = JSON.parse(JSON.parse(fixedInvalidJson));
+        const strCellText = JSON.stringify(cellTextJson, undefined, 2);
+        const formattedJson = syntaxHighlight(strCellText)
+        jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+    } else if (cellText.charAt(0) === "{") {
+        const cellTextJson = JSON.parse(cellText);
+        const strCellText = JSON.stringify(cellTextJson, undefined, 2);
+        const formattedJson = syntaxHighlight(strCellText)
+        jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+    } else {
+        jsonViewer.innerText = cellText
+    }
 
     const jsonViewerContainer = document.createElement('div');
     jsonViewerContainer.classList.add("json-viewer-container");
     jsonViewerContainer.appendChild(jsonViewer)
 
-    jsonViewerContainer.addEventListener("click", (e) => {
+    jsonViewerContainer.addEventListener("mousedown", (e) => {
         if (e.target === jsonViewerContainer) {
             document.body.removeChild(jsonViewerContainer)
         }
