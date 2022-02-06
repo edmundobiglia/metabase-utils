@@ -55,14 +55,19 @@ function syntaxHighlight(json) {
     });
 }
 
-window.onload = () => {
-    console.log("extension loaded");
-
-    const enabler = document.createElement('div');
-    enabler.classList.add("enabler");
-    document.body.appendChild(enabler);
-
-    enabler.addEventListener("click", () => {
+function tryToAddJsonViewer() {
+    if (document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]) {
         jsonPopup();
-    })
+        console.log("Metabase Utils extension JSON Viewer enabled.")
+    } else {
+        setTimeout(() => {
+            tryToAddJsonViewer()
+            console.log("No query detected. Trying to enable JSON Viewer again...")
+        }, 1500);
+    }
+}
+
+window.onload = () => {
+    console.log("Metabase Utils extension loaded.");
+    tryToAddJsonViewer()
 };
