@@ -3,11 +3,21 @@ function jsonPopup() {
 
     tablePanel.addEventListener("click", (e) => {
         if (e.target.closest(".TableInteractive-cellWrapper")) {
+            const cell = e.target.closest(".TableInteractive-cellWrapper").firstChild
+            const shouldDisplayInViewer = isEllipsisActive(cell)
             const cellText = e.target.closest(".TableInteractive-cellWrapper").firstChild.innerText
+
+            if (cellText.startsWith('{') || shouldDisplayInViewer) {
+                outputJson(cellText);
+            }
+
             copyToClipboard(cellText)
-            outputJson(cellText);
         }
     })
+}
+
+function isEllipsisActive(cell) {
+    return (cell.offsetWidth < cell.scrollWidth);
 }
 
 function outputJson(cellText) {
@@ -19,11 +29,13 @@ function outputJson(cellText) {
         const cellTextJson = JSON.parse(JSON.parse(fixedInvalidJson));
         const strCellText = JSON.stringify(cellTextJson, undefined, 2);
         const formattedJson = syntaxHighlight(strCellText)
+
         jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
     } else if (cellText.charAt(0) === "{") {
         const cellTextJson = JSON.parse(cellText);
         const strCellText = JSON.stringify(cellTextJson, undefined, 2);
         const formattedJson = syntaxHighlight(strCellText)
+
         jsonViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
     } else {
         jsonViewer.innerText = cellText
