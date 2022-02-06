@@ -4,26 +4,33 @@ function jsonPopup() {
     tablePanel.addEventListener("click", (e) => {
         if (e.target.closest(".TableInteractive-cellWrapper")) {
             const cellText = e.target.closest(".TableInteractive-cellWrapper").firstChild.innerText
-            console.log("asdfasdf")
 
             if (cellText.charAt(0) === "{") {
                 const cellTextJson = JSON.parse(cellText);
-                const strCellText = JSON.stringify(cellTextJson, undefined, 4);
-
-                output(syntaxHighlight(strCellText));
+                const strCellText = JSON.stringify(cellTextJson, undefined, 2);
+                const formattedJson = syntaxHighlight(strCellText)
+                outputJson(formattedJson);
             }
         }
     })
 }
 
-function output(inp) {
+function outputJson(inp) {
     const jsonViewer = document.createElement('div');
-
     jsonViewer.classList.add("json-viewer-box");
-
     jsonViewer.appendChild(document.createElement('pre')).innerHTML = inp
 
-    document.body.appendChild(jsonViewer)
+    const jsonViewerContainer = document.createElement('div');
+    jsonViewerContainer.classList.add("json-viewer-container");
+    jsonViewerContainer.appendChild(jsonViewer)
+
+    jsonViewerContainer.addEventListener("click", (e) => {
+        if (e.target === jsonViewerContainer) {
+            document.body.removeChild(jsonViewerContainer)
+        }
+    })
+
+    document.body.appendChild(jsonViewerContainer)
 }
 
 function syntaxHighlight(json) {
@@ -49,17 +56,13 @@ function syntaxHighlight(json) {
 }
 
 window.onload = () => {
+    console.log("extension loaded");
+
     const enabler = document.createElement('div');
-
     enabler.classList.add("enabler");
-
     document.body.appendChild(enabler);
 
     enabler.addEventListener("click", () => {
         jsonPopup();
     })
-
-    console.log("shit");
 };
-
-// chrome.runtime.onMessage.addListener(() => {});

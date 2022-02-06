@@ -23,42 +23,54 @@
     max-width: 300px;
 }
 
-.json-viewer-box {
-    padding: 0px 10px;
+.json-viewer-container {
+    box-sizing: border-box;
     width: 100%;
+    height: 100%;
+    z-index: 999;
+    top: 0;
+    left: 0;
+}
+
+.json-viewer-box {
+    background-color: #f9fbfc;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 12px 0px;
+    box-sizing: border-box;
+    left: 50%;
+    line-height: 1.5;
+    max-height: 90%;
     max-width: 700px;
     min-height: 300px;
-    max-height: 90%;
-    z-index: 1000;
-    position: absolute;
-    background-color: white;
-    box-sizing: border-box;
     overflow-y: scroll;
-    left: 50%;
+    padding: 0px 10px;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: rgba(100, 100, 111, 0.1) 0px 0px 10px 0px;
-    border-radius: 2px;
-    border: 2px solid #e9e9e9;
-    line-height: 1.5;
+    width: 100%;
+    z-index: 1000;
 }
 
 .string {
-    color: #7caf3d;
+    color: #5f8f2f;
 }
 
 .number {
-    color: #ddb628;
+    color: #dbb428;
 }
 
 .boolean {
-    color: #2670c5;
+    color: #3080c5;
 }
 
 .null {
-    color: #ca4a48;
+    color: #c74c4c;
 }
 
 .key {
-    color: #8758bd;
+    color: #7c52a1;
+}
+
+.json-pointer {
+    cursor: pointer !important;
 }
