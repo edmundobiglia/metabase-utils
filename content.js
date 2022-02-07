@@ -1,6 +1,4 @@
 function cellViewer() {
-  document.body.classList.remove("resize-column")
-
   const tablePanel = document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]
 
   tablePanel.addEventListener("click", (e) => {
@@ -99,7 +97,6 @@ function copyToClipboard(valueToCopy) {
 function tryToAddCellViewer() {
   if (document.getElementsByClassName("CardVisualization flex-full flex-basis-none TableInteractive relative TableInteractive--ready")[0]) {
     cellViewer();
-    chrome.storage.local.set({ originalUrl: window.location.href }, function () { });
     addColumnResizeToggle()
     console.log("Metabase Utils extension JSON Viewer enabled.")
   } else {
@@ -138,23 +135,15 @@ function addColumnResizeToggle() {
   toggle.innerHTML = resizeIcon()
   document.body.appendChild(toggle);
 
-
   toggle.addEventListener("click", () => {
     chrome.storage.local.get({ shouldResizeColumn: "true" }, function (result) {
       if (result.shouldResizeColumn !== 'false') {
         chrome.storage.local.set({ shouldResizeColumn: "false" }, function () { });
 
-        chrome.storage.local.get(['originalUrl'], function (result) {
-          window.location.replace(result.originalUrl)
-          window.location.reload()
-        })
+        window.location.reload();
       } else {
         chrome.storage.local.set({ shouldResizeColumn: "true" }, function () { });
-
-        chrome.storage.local.get(['originalUrl'], function (result) {
-          window.location.replace(result.originalUrl)
-          window.location.reload()
-        })
+        window.location.reload();
       }
     })
   })
