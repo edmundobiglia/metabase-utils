@@ -22,22 +22,15 @@ function outputCellViewerContent(cellText) {
   const cellViewer = document.createElement('div');
   cellViewer.classList.add("cell-viewer-box");
 
-  const copyButton = document.createElement('button');
-  copyButton.classList.add("copy-button");
-  copyButton.innerHTML = copyIcon()
-  cellViewer.appendChild(copyButton)
-
-  copyButton.addEventListener("click", () => {
-    copyToClipboard(cellText)
-  })
-
   if (cellText.startsWith('{"{')) {
-    const fixedInvalidJson = cellText.substring(1, cellText.length - 1)
-    const cellTextJson = JSON.parse(JSON.parse(fixedInvalidJson));
-    const stringCellText = JSON.stringify(cellTextJson, undefined, 2);
-    const formattedJson = syntaxHighlight(stringCellText)
+    // const fixedInvalidJson = cellText.substring(1, cellText.length - 1)
+    // const cellTextJson = JSON.parse(JSON.parse(fixedInvalidJson));
+    // const stringCellText = JSON.stringify(cellTextJson, undefined, 2);
+    // const formattedJson = syntaxHighlight(stringCellText)
 
-    cellViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+    // cellViewer.appendChild(document.createElement('pre')).innerHTML = formattedJson
+
+    cellViewer.innerText = cellText
   } else if (cellText.charAt(0) === "{") {
     const cellTextJson = JSON.parse(cellText);
     const stringCellText = JSON.stringify(cellTextJson, undefined, 2);
